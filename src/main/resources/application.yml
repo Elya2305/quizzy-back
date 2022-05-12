@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+google:
+  audience: 1079591479751-6fiu4a583rtir3o7qbctrs74bjpnh3m1.apps.googleusercontent.com
