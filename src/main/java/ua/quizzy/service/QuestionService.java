@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.quizzy.client.QuizApiClient;
 import ua.quizzy.domain.*;
-import ua.quizzy.entity.Answer;
 import ua.quizzy.entity.Question;
+import ua.quizzy.entity.QuestionAnswer;
 import ua.quizzy.entity.Quiz;
 import ua.quizzy.exception.custom.QuizIsNotFinishedException;
 import ua.quizzy.repository.QuestionAnswerRepository;
@@ -63,29 +63,42 @@ public class QuestionService {
         destination.setUuid(source.getUuid());
         destination.setQuestion(source.getQuestion());
         destination.setCorrectAnswer(mapCorrect(source.getAnswers()));
+        destination.setAnsweredAnswer(mapAnswered(source));
         return destination;
     }
 
-    private AnswerCorrect mapCorrect(List<Answer> source) {
-        return source.stream().filter(Answer::isCorrect)
+    private QuestionAnswerResponse mapAnswered(Question source) {
+        return questionAnswerRepository.findByQuestion(source).map(this::mapAnswered)
+                .orElse(new QuestionAnswerResponse());
+    }
+
+    private QuestionAnswerResponse mapAnswered(QuestionAnswer source) {
+        QuestionAnswerResponse destination = new QuestionAnswerResponse();
+        destination.setUuid(source.getAnswer().getUuid());
+        destination.setAnswer(source.getAnswer().getAnswer());
+        return destination;
+    }
+
+    private QuestionAnswerResponse mapCorrect(List<ua.quizzy.entity.Answer> source) {
+        return source.stream().filter(ua.quizzy.entity.Answer::isCorrect)
                 .map(this::mapCorrect)
                 .findAny()
                 .orElse(null);
     }
 
-    private AnswerCorrect mapCorrect(Answer source) {
-        AnswerCorrect destination = new AnswerCorrect();
+    private QuestionAnswerResponse mapCorrect(ua.quizzy.entity.Answer source) {
+        QuestionAnswerResponse destination = new QuestionAnswerResponse();
         destination.setAnswer(source.getAnswer());
         destination.setUuid(source.getUuid());
         return destination;
     }
 
-    private List<Answer> mapAnswers(List<String> incorrectSource, String correctSource, Question question) {
-        List<Answer> destination = incorrectSource.stream()
+    private List<ua.quizzy.entity.Answer> mapAnswers(List<String> incorrectSource, String correctSource, Question question) {
+        List<ua.quizzy.entity.Answer> destination = incorrectSource.stream()
                 .map((o) -> mapIncorrectAnswer(o, question))
                 .collect(Collectors.toList());
 
-        Answer correctDestination = new Answer();
+        ua.quizzy.entity.Answer correctDestination = new ua.quizzy.entity.Answer();
         correctDestination.setCorrect(true);
         correctDestination.setAnswer(correctSource);
         correctDestination.setQuestion(question);
@@ -94,8 +107,8 @@ public class QuestionService {
         return destination;
     }
 
-    private Answer mapIncorrectAnswer(String source, Question question) {
-        Answer answer = new Answer();
+    private ua.quizzy.entity.Answer mapIncorrectAnswer(String source, Question question) {
+        ua.quizzy.entity.Answer answer = new ua.quizzy.entity.Answer();
         answer.setAnswer(source);
         answer.setQuestion(question);
         return answer;
@@ -116,11 +129,11 @@ public class QuestionService {
         return destination;
     }
 
-    private List<AnswerResponse> mapAnswers(List<Answer> answers) {
+    private List<AnswerResponse> mapAnswers(List<ua.quizzy.entity.Answer> answers) {
         return answers.stream().map(this::mapAnswer).collect(Collectors.toList());
     }
 
-    private AnswerResponse mapAnswer(Answer source) {
+    private AnswerResponse mapAnswer(ua.quizzy.entity.Answer source) {
         AnswerResponse destination = new AnswerResponse();
         destination.setUuid(source.getUuid());
         destination.setAnswer(source.getAnswer());

@@ -2,6 +2,7 @@ package ua.quizzy.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import ua.quizzy.entity.Question;
 import ua.quizzy.entity.QuestionAnswer;
 import ua.quizzy.entity.User;
 
@@ -14,6 +15,8 @@ public interface QuestionAnswerRepository extends JpaRepository<QuestionAnswer, 
 
     @Query("select qa from QuestionAnswer qa where qa.question.uuid =:questionUuid")
     Optional<QuestionAnswer> getByQuestion(String questionUuid);
+
+    Optional<QuestionAnswer> findByQuestion(Question question);
 
     //    todo check
     @Query("select count(qa)>0 from QuestionAnswer qa where qa.answer.uuid =:answerUuid")

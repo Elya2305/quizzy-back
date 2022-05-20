@@ -3,7 +3,7 @@ package ua.quizzy.domain;
 import lombok.Data;
 
 @Data
-public class AnswerCorrect {
+public class QuestionAnswerResponse {
     private String uuid;
     private String answer;
 }

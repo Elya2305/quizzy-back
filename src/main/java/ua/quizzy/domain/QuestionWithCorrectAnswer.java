@@ -6,5 +6,6 @@ import lombok.Data;
 public class QuestionWithCorrectAnswer {
     private String uuid;
     private String question;
-    private AnswerCorrect correctAnswer;
+    private QuestionAnswerResponse correctAnswer;
+    private QuestionAnswerResponse answeredAnswer;
 }
