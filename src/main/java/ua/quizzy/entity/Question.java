@@ -18,7 +18,7 @@ import java.util.Objects;
 public class Question extends BaseEntity {
     private String question;
     private Type type;
-    private Difficulty difficulty; // todo remove?
+    private Difficulty difficulty;
     private Category category;
 
     @ManyToOne

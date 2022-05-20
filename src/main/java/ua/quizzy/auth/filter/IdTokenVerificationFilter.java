@@ -19,8 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import static io.netty.util.internal.StringUtil.isNullOrEmpty;
 import static java.util.Objects.isNull;
 
-// todo cache idTokenValue
-
 @Log4j2
 @Component
 public class IdTokenVerificationFilter extends OncePerRequestFilter {

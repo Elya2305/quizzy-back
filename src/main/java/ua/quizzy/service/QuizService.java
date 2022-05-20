@@ -28,7 +28,7 @@ public class QuizService {
     private final QuestionRepository questionRepository;
     private final QuestionAnswerRepository questionAnswerRepository;
 
-    //    todo transactional?
+    //    todo consider adding transactional?
     public QuizResponse startQuiz(QuizParameters quizParameters) {
         validateActiveQuiz();
 

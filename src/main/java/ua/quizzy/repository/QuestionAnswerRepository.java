@@ -18,7 +18,6 @@ public interface QuestionAnswerRepository extends JpaRepository<QuestionAnswer, 
 
     Optional<QuestionAnswer> findByQuestion(Question question);
 
-    //    todo check
     @Query("select count(qa)>0 from QuestionAnswer qa where qa.answer.uuid =:answerUuid")
     boolean existsByAnswer(String answerUuid);
 

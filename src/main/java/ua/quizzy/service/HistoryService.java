@@ -41,7 +41,7 @@ public class HistoryService {
                 .build();
     }
 
-    //     todo hibernate fetches user ????
+    //     todo hibernate fetches user
     public List<HistoryEntry> getHistory() {
         User userReference = userRepository.getById(UserContext.getUserUuid());
 

@@ -20,11 +20,6 @@ public class QuizController {
     private final QuestionService questionService;
     private final QuizApiClient quizApiClient;
 
-    @PostMapping("/test")
-    public QuestionClientList test(@RequestBody QuizParameters quizParameters) {
-        return quizApiClient.getQuestions(quizParameters);
-    }
-
     @PostMapping("/start")
     public QuizResponse startQuiz(@RequestBody QuizParameters quizParameters) {
         log.info("startQuiz");
